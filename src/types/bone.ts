@@ -1,6 +1,6 @@
 import type * as THREE from 'three';
 
-// Shared domain contracts for skeletal anatomy.
+// Contratos compartidos del dominio anatómico.
 
 export type BoneLink = {
   label: string;

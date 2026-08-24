@@ -1,4 +1,4 @@
-# Analytics de Skeletal 3D
+# Analytics de Atlas Óseo
 
 La aplicación carga GA4 únicamente cuando existe `VITE_GA_MEASUREMENT_ID`. Si la variable está
 vacía, Analytics queda desactivado y el atlas continúa funcionando sin enviar eventos.

@@ -1,4 +1,4 @@
-# Skeletal 3D
+# Atlas Óseo
 
 Atlas óseo interactivo para explorar el esqueleto humano en 3D, consultar fichas anatómicas y seguir relaciones entre huesos.
 
@@ -49,7 +49,7 @@ El código de esta aplicación está bajo la licencia MIT. Los modelos, audios, 
 
 ## Aviso de uso
 
-Skeletal 3D es un proyecto educativo y de portfolio. No es material médico certificado ni debe utilizarse como referencia clínica o para diagnóstico.
+Atlas Óseo es un proyecto educativo y de portfolio para explorar la anatomía humana en 3D. No es material médico certificado ni debe utilizarse como referencia clínica o para diagnóstico.
 
 ## Analytics y privacidad
 
