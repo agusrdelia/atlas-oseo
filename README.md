@@ -2,7 +2,7 @@
 
 Atlas óseo interactivo para explorar el esqueleto humano en 3D, consultar fichas anatómicas y seguir relaciones entre huesos.
 
-Demo: [skeletal-3d.vercel.app](https://skeletal-3d.vercel.app/)
+Demo: [altas-oseo.vercel.app](https://altas-oseo.vercel.app/)
 
 ## Requisitos
 
