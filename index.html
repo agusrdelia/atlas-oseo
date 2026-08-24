@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ece8df" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta
+      name="description"
+      content="Explora en 3D 204 huesos del esqueleto humano, consulta sus fichas anatómicas y descubre cómo se relacionan."
+    />
+    <meta name="author" content="Agustín D'Elía (@agusrdelia)" />
+    <link rel="canonical" href="https://skeletal-3d.vercel.app/" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Skeletal 3D" />
+    <meta property="og:url" content="https://skeletal-3d.vercel.app/" />
+    <meta property="og:title" content="Skeletal 3D — Atlas óseo interactivo" />
+    <meta
+      property="og:description"
+      content="Explora en 3D 204 huesos del esqueleto humano, consulta sus fichas anatómicas y descubre cómo se relacionan."
+    />
+    <meta property="og:image" content="https://skeletal-3d.vercel.app/opengraph.png" />
+    <meta property="og:image:secure_url" content="https://skeletal-3d.vercel.app/opengraph.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Skeletal 3D, atlas interactivo del esqueleto humano" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@agusrdelia" />
+    <meta name="twitter:creator" content="@agusrdelia" />
+    <meta name="twitter:title" content="Skeletal 3D — Atlas óseo interactivo" />
+    <meta
+      name="twitter:description"
+      content="Explora en 3D 204 huesos del esqueleto humano, consulta sus fichas anatómicas y descubre cómo se relacionan."
+    />
+    <meta name="twitter:image" content="https://skeletal-3d.vercel.app/opengraph.png" />
+    <meta name="twitter:image:alt" content="Skeletal 3D, atlas interactivo del esqueleto humano" />
+    <title>Skeletal 3D — Atlas óseo interactivo</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://skeletal-3d.vercel.app/#webpage",
+        "url": "https://skeletal-3d.vercel.app/",
+        "name": "Skeletal 3D — Atlas óseo interactivo",
+        "description": "Explora en 3D 204 huesos del esqueleto humano, consulta sus fichas anatómicas y descubre cómo se relacionan.",
+        "inLanguage": "es-AR",
+        "image": "https://skeletal-3d.vercel.app/opengraph.png",
+        "author": {
+          "@type": "Person",
+          "name": "Agustín D'Elía",
+          "url": "https://x.com/agusrdelia/",
+          "sameAs": ["https://x.com/agusrdelia/", "https://www.linkedin.com/in/agusrdelia/"]
+        }
+      }
+    </script>
+    <style>
+      .seo-title {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      #boot-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-content: center;
+        justify-items: center;
+        gap: 14px;
+        background: #eae7df;
+        color: #393934;
+        text-align: center;
+        transition:
+          opacity 0.45s,
+          visibility 0.45s;
+      }
+      #boot-loader.done {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #boot-loader i {
+        width: 28px;
+        height: 28px;
+        border: 1px solid #c9c0b3;
+        border-top-color: #995c3b;
+        border-radius: 50%;
+        animation: boot-spin 0.8s linear infinite;
+      }
+      #boot-loader strong {
+        min-height: 30px;
+        font:
+          400 24px/1.2 Georgia,
+          serif;
+      }
+      @keyframes boot-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="boot-loader" role="status" aria-live="polite">
+      <i></i><strong>Generando estructura ósea</strong>
+    </div>
+    <div id="app"><h1 class="seo-title">Skeletal 3D — Atlas óseo interactivo</h1></div>
+    <script>
+      (() => {
+        const el = document.querySelector('#boot-loader strong'),
+          phrases = [
+            'Generando estructura ósea',
+            'Ensamblando huesos',
+            'Articulando el esqueleto',
+            'Preparando el atlas anatómico',
+          ];
+        let phrase = 0,
+          typeTimer,
+          phraseTimer,
+          stopped = false;
+        function type() {
+          if (stopped) return;
+          const text = phrases[phrase];
+          el.textContent = '';
+          let i = 0;
+          const next = () => {
+            if (stopped) return;
+            el.textContent = text.slice(0, ++i);
+            if (i < text.length) typeTimer = setTimeout(next, 300 / text.length);
+            else
+              phraseTimer = setTimeout(() => {
+                phrase = (phrase + 1) % phrases.length;
+                type();
+              }, 2000);
+          };
+          next();
+        }
+        window.__stopBootLoader = () => {
+          stopped = true;
+          clearTimeout(typeTimer);
+          clearTimeout(phraseTimer);
+        };
+        type();
+      })();
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

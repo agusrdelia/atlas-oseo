@@ -1,0 +1,21 @@
+{
+  "name": "Skeletal 3D — Atlas óseo interactivo",
+  "short_name": "Skeletal 3D",
+  "description": "Explora en 3D 204 huesos del esqueleto humano y consulta sus fichas anatómicas.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ece8df",
+  "background_color": "#eae7df",
+  "display": "standalone",
+  "lang": "es-AR"
+}
