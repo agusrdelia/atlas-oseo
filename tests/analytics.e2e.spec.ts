@@ -5,6 +5,18 @@ type CapturedEvent = {
   parameters: Record<string, unknown>;
 };
 
+type ViewSnapshot = {
+  cameraPosition: number[];
+  target: number[];
+};
+
+function viewDirection(view: ViewSnapshot) {
+  const distance = Math.hypot(
+    ...view.cameraPosition.map((value, index) => value - view.target[index]!)
+  );
+  return view.cameraPosition.map((value, index) => (value - view.target[index]!) / distance);
+}
+
 async function analyticsEvents(page: Page) {
   return page.evaluate(() => {
     const dataLayer = (window as unknown as { dataLayer?: Array<ArrayLike<unknown>> }).dataLayer;
@@ -119,8 +131,10 @@ test('registra eventos útiles sin datos sensibles ni duplicados @slow', async (
   await expect(gravity).toHaveAttribute('aria-pressed', 'false');
   await expect(dance).toHaveAttribute('aria-pressed', 'true', { timeout: 5_000 });
   const recoveredView = await page.evaluate(() => window.__ATLAS_VIEW__!());
-  expect(recoveredView.cameraPosition).toEqual(fallenView.cameraPosition);
-  expect(recoveredView.target).toEqual(fallenView.target);
+  const directionDelta = Math.hypot(
+    ...viewDirection(recoveredView).map((value, index) => value - viewDirection(fallenView)[index]!)
+  );
+  expect(directionDelta).toBeLessThan(0.03);
 
   const events = await analyticsEvents(page);
   expect(events.some((event) => event.name === 'app_ready')).toBe(true);

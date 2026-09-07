@@ -182,7 +182,6 @@ type GravityController = {
   setActive: (active: boolean) => void;
   update: (delta: number) => void;
 };
-const GRAVITY_RESTORE_DURATION_MS = 850;
 let motionModel: THREE.Group | undefined;
 let danceController: DanceController | undefined;
 let gravityController: GravityController | undefined;
@@ -537,16 +536,22 @@ document.addEventListener('keydown', (event) => {
   else if (infoModal.classList.contains('open')) closeInfoModal();
   else if (selected) select(undefined, { playCloseSound: true });
 });
-let pendingMotionTimer: number | undefined;
+function waitForGravityRestore() {
+  if (!gravityController?.restoring) return Promise.resolve();
+  return new Promise<void>((resolve) => {
+    const check = () => {
+      if (!gravityController?.restoring) resolve();
+      else window.requestAnimationFrame(check);
+    };
+    window.requestAnimationFrame(check);
+  });
+}
+
 async function setMotionMode(mode: 'dance' | 'jog' | null) {
   atlasState.setMotion(mode);
   if (!danceController && !mode) return;
   await ensureDanceController();
   if (!danceController) return;
-  if (pendingMotionTimer !== undefined) {
-    window.clearTimeout(pendingMotionTimer);
-    pendingMotionTimer = undefined;
-  }
   if (mode && gravityController && (gravityController.active || gravityController.restoring)) {
     if (gravityController.active) {
       gravityController.setActive(false);
@@ -554,11 +559,8 @@ async function setMotionMode(mode: 'dance' | 'jog' | null) {
     }
     danceAudio.pause();
     runningAudio.pause();
-    pendingMotionTimer = window.setTimeout(() => {
-      pendingMotionTimer = undefined;
-      void setMotionMode(mode);
-    }, GRAVITY_RESTORE_DURATION_MS + 100);
-    return;
+    await waitForGravityRestore();
+    atlasState.setMotion(mode);
   }
   if (mode) select(undefined, { preserveCamera: true });
   danceController.setMode(mode);
